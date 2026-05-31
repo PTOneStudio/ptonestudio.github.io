@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피티원 스튜디오 | 분당 재활·통증 전문 1:1 PT</title>
+    <!-- Google Fonts: Noto Sans KR for body, Noto Serif KR for headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Color System — Option B: Deep Ocean (딥 오션) */
+        :root {
+            --bg-dark: #0F1E2E;        /* 딥 슬레이트 네이비 */
+            --bg-darker: #081320;      /* 더 깊은 오션 블랙 */
+            --text-light: #DBE9F0;     /* 아이스 화이트 */
+            --text-muted: #6A8FA8;     /* 오션 블루그레이 */
+            --gold-primary: #5B9BB5;   /* 아쿠아 스틸 (강조색) */
+            --gold-light: #A0C4D8;     /* 연한 아쿠아 */
+
+            --padding-section: 120px 24px;
+            --font-main: 'Noto Sans KR', sans-serif;
+            --font-heading: 'Noto Serif KR', serif;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-size: 18px; /* 60~70대 가독성 최우선 */
+            line-height: 1.8;
+            letter-spacing: -0.2px;
+            word-break: keep-all;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.4;
+            letter-spacing: -0.5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .gold-text {
+            color: var(--gold-primary);
+        }
+
+        /* Animation Classes */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Layout Structure (여백과 집중) */
+        section {
+            padding: var(--padding-section);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 20px;
+        }
+
+        /* 1. Hero Section */
+        .hero {
+            height: 100vh;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #0F1E2E;
+            border-bottom: none;
+            overflow: hidden;
+        }
+
+        /* 로고: 텍스트보다 살짝 위, 오버랩 */
+        .hero-logo-bg {
+            position: absolute;
+            top: 38%;              /* 텍스트 중앙(50%)보다 위 — 오버랩 효과 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 65%;            /* 크기 줄임 */
+            max-width: 480px;
+            opacity: 0.35;
+            z-index: 1;
+            pointer-events: none;
+            filter: saturate(0.5) brightness(1.3);
+            transition: none;
+        }
+
+        @media (max-width: 767px) {
+            .hero-logo-bg {
+                top: 35%;
+                width: 85%;
+                max-width: 340px;
+            }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at center, rgba(15, 30, 46, 0.0) 0%, rgba(15, 30, 46, 0.4) 80%),
+                linear-gradient(to bottom, rgba(15, 30, 46, 0.2), rgba(15, 30, 46, 0.65));
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 0 24px;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 40px; /* 대형 타이포그래피 */
+            font-weight: 900;
+            margin-bottom: 24px;
+            word-break: keep-all;
+        }
+
+        .hero h1 span {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .hero p.sub-copy {
+            font-size: 22px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            word-break: keep-all;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .hero-badge {
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 8px 16px;
+            font-size: 16px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 2. 우리가 다른 이유 (Comparison) */
+        .comparison-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .comparison-box {
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        .comparison-box.normal {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+        }
+
+        .comparison-box.ptone {
+            background-color: rgba(91, 155, 181, 0.06);
+            border: 1px solid rgba(91, 155, 181, 0.3);
+        }
+
+        .comparison-box h3 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .comparison-box.ptone h3 {
+            color: var(--gold-primary);
+        }
+
+        .comparison-list li {
+            font-size: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            word-break: keep-all;
+        }
+
+        .comparison-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .comparison-list.normal li::before {
+            content: '❌';
+            margin-right: 12px;
+            font-size: 16px;
+            opacity: 0.5;
+        }
+
+        .comparison-list.ptone li::before {
+            content: '✅';
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        /* 3. 이런 분께 추천 */
+        .recommend-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .recommend-item {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--gold-primary);
+            font-size: 20px;
+            line-height: 1.8;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .recommend-item::before {
+            content: '✓';
+            color: var(--gold-primary);
+            font-weight: bold;
+            margin-right: 16px;
+            font-size: 22px;
+        }
+
+        /* 4. 전문 프로세스 */
+        .process-list {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Vertical line for timeline */
+        .process-list::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 24px;
+            width: 1px;
+            background-color: rgba(91, 155, 181, 0.3);
+        }
+
+        .process-step {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--bg-dark);
+            border: 2px solid var(--gold-primary);
+            color: var(--gold-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: var(--font-heading);
+            flex-shrink: 0;
+            z-index: 2;
+        }
+
+        .step-content {
+            margin-left: 30px;
+            padding-top: 10px;
+        }
+
+        .step-content h3 {
+            font-size: 24px;
+            color: var(--gold-primary);
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            font-size: 18px;
+            color: var(--text-muted);
+            word-break: keep-all;
+            line-height: 1.8;
+        }
+
+        .system-name {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        /* 5. 시설 소개 */
+        .facility-placeholder {
+            width: 100%;
+            height: 400px;
+            background-color: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 18px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        /* 6. 회원 후기 */
+        .review-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .review-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 60px;
+            color: rgba(91, 155, 181, 0.2);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .review-text {
+            font-size: 20px;
+            font-style: italic;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+            word-break: keep-all;
+            line-height: 1.8;
+            letter-spacing: -0.3px;
+        }
+
+        .review-author {
+            color: var(--gold-primary);
+            text-align: right;
+            font-size: 16px;
+        }
+
+        /* 7. 통증 부위별 안내 */
+        /* 모바일: 가로 스크롤 / 태블릿 이상: 자동 그리드 */
+
+        /* 모바일 기본 - 가로 스크롤 */
+        .pain-areas-wrapper {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            margin-left: -50vw;
+            padding: 20px 0;
+        }
+
+        .pain-cards-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 16px;
+            padding: 0 24px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .pain-cards-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pain-card {
+            flex: 0 0 75%;
+            max-width: 280px;
+            scroll-snap-align: start;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 36px 24px;
+            border-radius: 8px;
+            text-align: center;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .pain-card:hover {
+            border-color: rgba(91, 155, 181, 0.4);
+            background-color: rgba(91, 155, 181, 0.06);
+        }
+
+        .pain-card h3 {
+            color: var(--gold-primary);
+            font-size: 24px;
+            margin-bottom: 12px;
+            display: inline-block;
+            border-bottom: 1px solid var(--gold-primary);
+            padding-bottom: 4px;
+        }
+
+        .pain-card p {
+            font-size: 17px;
+            color: var(--text-light);
+            word-break: keep-all;
+            line-height: 1.8;
+        }
+
+        .swipe-hint {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 16px;
+        }
+
+        /* 태블릿 (600px~) - 2열 그리드로 전환 */
+        @media (min-width: 600px) {
+            .pain-areas-wrapper {
+                width: 100%;
+                left: auto;
+                margin-left: 0;
+            }
+            .pain-cards-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                overflow-x: visible;
+                scroll-snap-type: none;
+                padding: 0;
+                gap: 20px;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .pain-card {
+                flex: none;
+                max-width: 100%;
+            }
+            .swipe-hint {
+                display: none;
+            }
+        }
+
+        /* 데스크탑 (900px~) - 5열 1줄 그리드 */
+        @media (min-width: 900px) {
+            .pain-cards-container {
+                grid-template-columns: repeat(5, 1fr);
+                max-width: 1000px;
+            }
+        }
+
+        /* 8. 가격 안내 */
+        .price-info {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .price-placeholder {
+            padding: 60px 20px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+        }
+
+        /* 9. 오시는 길 */
+        .location-info {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .map-image-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            border: 1px solid rgba(91, 155, 181, 0.2);
+            cursor: pointer;
+        }
+
+        .map-image-wrap img {
+            width: 100%;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .map-image-wrap:hover img {
+            transform: scale(1.02);
+        }
+
+        /* 지도 위 반투명 오버레이 — 호버 시 안내 문구 */
+        .map-image-wrap::after {
+            display: none;
+        }
+
+        .map-image-wrap:hover::after {
+            display: none;
+        }
+
+        .location-address {
+            font-size: 19px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .location-sub {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .naver-map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #03C75A; /* 네이버 그린 */
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 16px 36px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .naver-map-btn:hover {
+            background-color: #02a84b;
+            transform: translateY(-2px);
+        }
+
+        .naver-map-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+        }
+
+        /* Footer & Fixed CTA */
+        footer {
+            padding: 60px 24px 120px 24px; /* Extra bottom padding for CTA */
+            text-align: center;
+            background-color: var(--bg-darker);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            color: var(--gold-primary);
+            margin-bottom: 16px;
+        }
+
+        .kakao-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: var(--text-muted);
+            text-decoration: underline;
+            font-size: 16px;
+        }
+
+        .fixed-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #5B9BB5;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+        }
+
+        .fixed-cta a {
+            display: block;
+            padding: 20px;
+            color: #081320;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Media Queries for Desktop */
+        @media (min-width: 768px) {
+            .hero h1 { font-size: 56px; }
+            .hero p.sub-copy { font-size: 26px; }
+            .comparison-container { flex-direction: row; }
+            .comparison-box { flex: 1; }
+            .review-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. Hero Section -->
+    <section class="hero">
+        <!-- 로고 배경 (반투명 워터마크 효과) -->
+        <img 
+            src="PT_One_로고.png" 
+            alt="" 
+            class="hero-logo-bg"
+            aria-hidden="true"
+            fetchpriority="high"
+            decoding="sync"
+        >
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-up">
+            <h1>
+                치료 후에도<br>남아있는 통증,
+                <span class="gold-text">이제는 움직임으로<br>해결합니다</span>
+            </h1>
+            <p class="sub-copy">1:1 재활·통증 전문 프리미엄 PT 스튜디오</p>
+            <div class="hero-badges">
+                <div class="hero-badge">장기 회원 유지율 98%+</div>
+                <div class="hero-badge">미국에서 검증된 NSCA·NASM 자격 보유</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. 우리가 다른 이유 -->
+    <section>
+        <div class="container fade-up">
+            <div class="section-header">
+                <h2>우리가 다른 이유</h2>
+            </div>
+            <div class="comparison-container">
+                <div class="comparison-box normal">
+                    <h3>피티원은 이런 곳이 아닙니다</h3>
+                    <ul class="comparison-list normal">
+                        <li>보디빌딩식 운동</li>
+                        <li>획일적인 운동 프로그램</li>
+                    </ul>
+                </div>
+                <div class="comparison-box ptone">
+                    <h3>피티원은 이런 곳입니다</h3>
+                    <ul class="comparison-list ptone">
+                        <li>통증 완화 / 기능 회복</li>
+                        <li>60~70대 몸에 맞는 운동</li>
+                        <li>매 회 맞춤 설계</li>
+                        <li>재활 전문 경력 트레이너</li>
+                        <li>1:1 맞춤 프리미엄 케어</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 이런 분께 추천 -->
+    <section>
+        <div class="container fade-up">
+            <div class="section-header">
+                <h2>이런 분께 추천합니다</h2>
+            </div>
+            <div class="recommend-list">
+                <div class="recommend-item">부모님의 통증과 거동이 걱정되는 자녀분</div>
+                <div class="recommend-item">병원에서 "이제 운동하세요"라는 말을 들으셨지만 어디서 해야 할지 모르시는 분</div>
+                <div class="recommend-item">치료 후에도 여전히 불편함이 남아있으신 분</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 전문 프로세스 -->
+    <section>
+        <div class="container fade-up">
+            <div class="section-header">
+                <h2>피티원 5단계 케어 프로세스</h2>
+            </div>
+            <div class="process-list">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>정밀 평가</h3>
+                        <p>관절 가동 범위, 통증 유발점, 자세 불균형 분석</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>원인 파악</h3>
+                        <p>치료로 해결되지 않은 기능적 원인 찾기</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>맞춤 설계</h3>
+                        <p>NSCA·NASM 기반 개인 맞춤 프로그램 설계</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>1:1 트레이닝</h3>
+                        <p>MasterPro·Oxizen 고급 장비 활용, 안전한 기능 회복 운동</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>지속 관리</h3>
+                        <p>매 세션 운동 영상을 녹화하여 카카오톡으로 제공, 집에서도 정확한 동작으로 관리 가능</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. 시설 소개 -->
+    <section>
+        <div class="container fade-up">
+            <div class="section-header">
+                <h2>프라이빗 시설 안내</h2>
+            </div>
+            <div class="facility-placeholder">
+                이미지 영역 (추후 시설 사진 삽입)
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 회원 후기 -->
+    <section>
+        <div class="container fade-up">
+            <div class="section-header">
+                <h2>회원 후기</h2>
+            </div>
+            <div class="review-grid">
+                <div class="review-card">
+                    <p class="review-text">계단을 오르내릴 때마다 무릎이 시큰거렸는데, 운동을 시작하고 나서 이제 손주를 안아줄 수 있어요.</p>
+                    <p class="review-author">- 60대 회원님</p>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">오래 걷거나 서 있는 게 고통이었는데, 여기서 제 몸에 맞는 운동을 배운 후로 산책이 즐거워졌습니다.</p>
+                    <p class="review-author">- 70대 회원님</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. 통증 부위별 안내 (가로 스와이프 카드) -->
+    <section>
+        <div class="container fade-up">
+            <div class="section-header">
+                <h2>어디가 불편하십니까?</h2>
+                <p>증상에 맞춘 전문적인 접근</p>
+            </div>
+            
+            <div class="pain-areas-wrapper">
+                <div class="pain-cards-container">
+                    <div class="pain-card">
+                        <h3>무릎</h3>
+                        <p>계단 오르내리기가<br>힘드신 분</p>
+                    </div>
+                    <div class="pain-card">
+                        <h3>허리</h3>
+                        <p>오래 걷거나 서 있기 어려우신 분</p>
+                    </div>
+                    <div class="pain-card">
+                        <h3>어깨</h3>
+                        <p>팔 올리기가 불편하고 밤에 아프신 분</p>
+                    </div>
+                    <div class="pain-card">
+                        <h3>보행</h3>
+                        <p>낙상이 걱정되고 걸음이 불안하신 분</p>
+                    </div>
+                    <div class="pain-card">
+                        <h3>골프</h3>
+                        <p>스윙 후 통증, 비거리 저하가 고민이신 분</p>
+                    </div>
+                </div>
+                <p class="swipe-hint">← 옆으로 밀어보세요 →</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 9. 오시는 길 -->
+    <section>
+        <div class="container fade-up">
+            <div class="section-header">
+                <h2>오시는 길</h2>
+            </div>
+            <div class="location-info">
+
+                <!-- 지도 이미지 — 클릭 시 네이버 지도 열림 -->
+                <a href="https://naver.me/FiPjMpdI" target="_blank" rel="noopener" class="map-image-wrap" aria-label="네이버 지도에서 피티원 스튜디오 보기">
+                    <img src="map.png" alt="피티원 스튜디오 위치 지도 — 경기 성남시 분당구 구미동">
+                </a>
+
+                <p class="location-address">경기 성남시 분당구 구미로 143</p>
+                <p class="location-sub">무지개마을라이프아파트 상가동 204호 · 주차 가능</p>
+
+                <!-- 네이버 지도 버튼 -->
+                <a href="https://naver.me/FiPjMpdI" target="_blank" rel="noopener" class="naver-map-btn">
+                    <!-- 네이버 N 아이콘 (SVG) -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/>
+                    </svg>
+                    네이버 지도에서 길찾기
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">PT ONE STUDIO</div>
+            <p>피티원 스튜디오</p>
+            <p>경기 성남시 분당구 구미로 143 무지개마을라이프아파트 상가동 204호</p>
+            <p style="margin-top:8px;">031-717-3384</p>
+        </div>
+    </footer>
+
+    <!-- Fixed CTA Button -->
+    <div class="fixed-cta">
+        <a id="cta-phone-link" href="tel:0507-1380-3386">전화 상담: 0507-1380-3386</a>
+    </div>
+
+    <!-- JavaScript for Fade-in Animation -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // PC에서는 tel: 링크 비활성화 (전화 앱 없음 → 오류 방지)
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const ctaLink = document.getElementById('cta-phone-link');
+            if (!isMobile && ctaLink) {
+                ctaLink.removeAttribute('href');
+                ctaLink.style.cursor = 'default';
+                ctaLink.title = '모바일에서 전화 연결이 가능합니다';
+            }
+
+            const fadeElements = document.querySelectorAll('.fade-up');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optional: Stop observing once faded in
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                threshold: 0.1, // Trigger when 10% of the element is visible
+                rootMargin: "0px 0px -50px 0px" // Slightly before it hits the bottom
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html><!-- mobile hero override injected -->
